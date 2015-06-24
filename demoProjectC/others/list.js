@@ -1,0 +1,39 @@
+// global vars : faqList
+var faqList = [
+	{
+		title:'怎么邀请好友？（假数据时，这个可以点开）',
+		src:'zmyqhy'
+	},
+	{
+		title:'（标题最长多少？）邀请邀请邀请邀请邀请邀请邀请邀请邀请邀请邀请邀请邀请邀请邀请邀请邀请邀请邀请码？',
+		src:'<这只是个demo，包里没这个文件>'
+	},
+	{
+		title:'怎么创建群组？',
+		src:'<这只是个demo，包里没这个文件>'
+	},
+	{
+		title:'怎么发起活动？',
+		src:'<这只是个demo，包里没这个文件>'
+	},
+	{
+		title:'为什么打不开账户？',
+		src:'<这只是个demo，包里没这个文件>'
+	},
+	{
+		title:'怎样发送动态信息？',
+		src:'<这只是个demo，包里没这个文件>'
+	},
+	{
+		title:'什么时候可以专门为企业升级账户？',
+		src:'<这只是个demo，包里没这个文件>'
+	},
+	{
+		title:'如何使用群相册？',
+		src:'<这只是个demo，包里没这个文件>'
+	},
+	{
+		title:'测试word-break:abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij',
+		src:'<这只是个demo，包里没这个文件>'
+	}
+]

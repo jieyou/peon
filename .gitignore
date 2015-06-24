@@ -1,11 +1,11 @@
-# Build and Release Folders
-bin/
-bin-debug/
-bin-release/
+.DS_Store
+node_modules/*
 
-# Other files and folders
-.settings/
+demoProjectA/dist/*
+demoProjectA/peon_md5_map/*
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+demoProjectB/dist/*
+demoProjectB/peon_md5_map/*
+
+demoProjectC/dist/*
+demoProjectC/peon_md5_map/*

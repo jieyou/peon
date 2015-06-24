@@ -1,0 +1,287 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 5, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 15, ../../sass/main.scss */
+html {
+  -webkit-tap-highlight-color: transparent;
+  background-color: #f2f2f2;
+  color: #2d2d2d;
+}
+
+/* line 20, ../../sass/main.scss */
+.hide {
+  display: none;
+}
+
+/*iconfont*/
+@font-face {
+  font-family: 'iconfont';
+  src: url("//at.alicdn.com/t/font_1433915725_2472486.eot");
+  /* IE9*/
+  src: url("//at.alicdn.com/t/font_1433915725_2472486.eot?#iefix") format("embedded-opentype"), url("//at.alicdn.com/t/font_1433915725_2472486.woff") format("woff"), url("//at.alicdn.com/t/font_1433915725_2472486.ttf") format("truetype"), url("//at.alicdn.com/t/font_1433915725_2472486.svg#iconfont") format("svg");
+  /* iOS 4.1- */
+}
+/* line 33, ../../sass/main.scss */
+.iconfont {
+  font-family: "iconfont";
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* line 41, ../../sass/main.scss */
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 45, ../../sass/main.scss */
+b {
+  font-weight: bold;
+}
+
+/* line 50, ../../sass/main.scss */
+#wrapper {
+  width: 100%;
+}
+
+/* line 54, ../../sass/main.scss */
+.goBack {
+  height: 2.66667rem;
+  line-height: 2.66667rem;
+  text-align: center;
+  border-radius: 0.44444rem;
+  background-color: #fff;
+  margin: 1.33333rem 0.66667rem;
+}
+
+/* line 64, ../../sass/main.scss */
+#searchContaier {
+  height: 3.33333rem;
+  position: relative;
+  padding: 0.66667rem 1.11111rem 0;
+  background-color: #fff;
+}
+/* line 70, ../../sass/main.scss */
+#searchContaier #inputFakeBorder {
+  width: 17.73333rem;
+  height: 0.22222rem;
+  border: 1px solid #c8c8c8;
+  border-top: none;
+  position: absolute;
+  left: 1.11111rem;
+  bottom: 0.66667rem;
+}
+/* line 80, ../../sass/main.scss */
+#searchContaier #searchInput {
+  vertical-align: middle;
+  border: none;
+  width: 14.66667rem;
+  height: 2rem;
+  font-size: 1rem;
+  margin-right: 0.66667rem;
+}
+/* line 61, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+#searchContaier #searchInput:-moz-placeholder {
+  color: #868686;
+}
+/* line 64, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+#searchContaier #searchInput::-moz-placeholder {
+  color: #868686;
+}
+/* line 67, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+#searchContaier #searchInput:-ms-input-placeholder {
+  color: #868686;
+}
+/* line 56, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+#searchContaier #searchInput::-webkit-input-placeholder {
+  color: #868686;
+}
+/* line 91, ../../sass/main.scss */
+#searchContaier #searchIcon {
+  vertical-align: middle;
+  font-size: 1.33333rem;
+  margin-left: 0.4rem;
+  margin-right: 0.66667rem;
+  color: #868686;
+}
+/* line 99, ../../sass/main.scss */
+#searchContaier #searchBtn {
+  vertical-align: middle;
+  border-radius: 0.44444rem;
+  border: none;
+  width: 3.33333rem;
+  height: 2rem;
+  background-color: #39bf9e;
+  color: #fff;
+  -webkit-appearance: none;
+  font-size: 0.93333rem;
+}
+
+/* line 114, ../../sass/main.scss */
+#listContainer {
+  margin-top: 0.8rem;
+  background-color: #fff;
+  border: 1px solid #c8c7cc;
+}
+/* line 118, ../../sass/main.scss */
+#listContainer .noList {
+  line-height: 2.66667rem;
+  padding-left: 1.11111rem;
+}
+/* line 122, ../../sass/main.scss */
+#listContainer ul {
+  padding-left: 1.11111rem;
+}
+/* line 124, ../../sass/main.scss */
+#listContainer ul li {
+  line-height: 1.77778rem;
+  padding: 0.44444rem 0;
+  border-bottom: 1px solid #e2e2e2;
+}
+/* line 130, ../../sass/main.scss */
+#listContainer ul li div {
+  cursor: pointer;
+  padding-right: 1.11111rem;
+  word-break: "break-all";
+  word-break: break-word;
+}
+/* line 134, ../../sass/main.scss */
+#listContainer ul li div .redFont {
+  color: #e40000;
+}
+/* line 139, ../../sass/main.scss */
+#listContainer ul li:last-child {
+  border-bottom: none;
+}
+
+/* line 145, ../../sass/main.scss */
+#contentContainer {
+  margin-top: 0.8rem;
+  background-color: #fff;
+}
+/* line 148, ../../sass/main.scss */
+#contentContainer #contentTitle {
+  font-size: 1.13333rem;
+  line-height: 2.66667rem;
+  border-top: 1px solid #c8c7cc;
+  padding-left: 1.11111rem;
+  word-break: break-all;
+  word-break: break-word;
+}
+/* line 154, ../../sass/main.scss */
+#contentContainer #contentTitle #contentTitleInner {
+  border-bottom: 1px solid #e2e2e2;
+  padding-right: 1.11111rem;
+}
+/* line 158, ../../sass/main.scss */
+#contentContainer #contentTitle #qMark {
+  font-size: 1.33333rem;
+}
+/* line 162, ../../sass/main.scss */
+#contentContainer #content {
+  font-size: 0.93333rem;
+  line-height: 1.6rem;
+  padding: 0.44444rem 1.33333rem;
+  word-break: break-all;
+  word-break: break-word;
+}
+/* line 167, ../../sass/main.scss */
+#contentContainer #content p {
+  margin-top: 0.44444rem;
+  margin-bottom: 0.44444rem;
+}
+/* line 172, ../../sass/main.scss */
+#contentContainer #content img {
+  width: 100%;
+}
+
+/* line 178, ../../sass/main.scss */
+#loadingMask {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+/* line 184, ../../sass/main.scss */
+#loadingMask #loadingMaskInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 3.11111rem;
+  line-height: 3.11111rem;
+  width: 3.11111rem;
+  margin-left: -1.55556rem;
+  margin-top: -1.55556rem;
+  border-radius: 0.44444rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: 1.33333rem;
+  color: #fff;
+  text-align: center;
+}
