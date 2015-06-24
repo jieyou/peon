@@ -109,7 +109,8 @@ started](http://gruntjs.com/getting-started)
 - userev的npm发布
 - 支持编译AMD体系的脚本（或托管给r.js？）
 - 解决css、js、图片的文件名不能包含中横线 `-` 的问题
-- 被压缩的js和css可以被相互引用
+- 支持被压缩的js和css的相互引用
+- 按某个特定注释标记，删除标记之间的代码
 
 ## License
 
