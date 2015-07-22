@@ -1,6 +1,10 @@
 
 jQuery(document).ready(function() {
 
+    /* peon delete start */
+    alert('dom ready了 | 我是调试信息，使用peon编译后将自动删除')
+    /* peon delete end */
+
     $('.page-container form').submit(function(){
         var username = $(this).find('.username').val();
         var password = $(this).find('.password').val();

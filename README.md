@@ -12,6 +12,7 @@
 -   文件重命名：对静态代码图片用md5求和，然后截取一定位数，写入到文件名中
 -   在html、js、css中对上述文件的引用，替换为上一步重命名后的引用
 -   将静态文件地址替换为CDN链接（添加前缀）
+-   删除某些无需上线的代码行
 
 本项目在MAC上开发，测试涵盖了MAC和WINDOWS
 
@@ -85,11 +86,10 @@ started](http://gruntjs.com/getting-started)
 
 - 运行， `grunt myProject`
 - 会将全部处理后的文件置于 “ `dist/` ”的路径下
-- md5改名前后的文件名关系隐射，将生成并放在 `peon_md5_map/` 路径下，每次生成images的、css和js的各一个json文件，便于排查问题、增量上线等
 
-## 新功能
+## 高级功能
 
-### 将静态文件地址替换为CDN链接（添加前缀）
+### 将静态文件地址替换为CDN链接（给地址添加前缀）
 
 在 `Gruntfile.js`
 中添加项目时，如果该项目需要将静态文件置于一个特殊的CDN服务器（即需要为修改代码中的静态文件增加一个域名前缀），则需要在配置
@@ -104,13 +104,33 @@ started](http://gruntjs.com/getting-started)
 一般来说，并不是所有的静态文件都需要添加前缀（比如 `data:url`
 或绝对地址），在具体项目中，你可能需要更改不用添加前缀的静态文件的过滤器，那么请搜索 `rewriter:function` ，然后修改相关代码
 
+### 删除无需上线的代码行（如调试代码）
+
+你可以通过在
+
+- html中使用`<!-- peon delete start -->`与`<!-- peon delete end -->`
+- js和css中使用`/* peon delete start */`与`/* peon delete end */`
+
+将无需上线的代码行包裹起来，这样在编译时会自动删除他们，你可以在`demoProjectA`项目中的
+
+- `index.html`
+- `js/script.js`
+- `css/style.css`
+
+里面看到示例。目前还没法支持在js中的`// peon delete start `这种写法，必须使用`/*`
+
+### 输出md5重命名前后的映射关系
+
+- 将Gruntfile.js顶部的`var md5RenameMap = false`改为`true`即可开启
+- md5改名前后的文件名关系映射，将生成并放在 `peon_md5_map/` 路径下，每次生成images的、css和js的各一个json文件，便于排查问题、增量上线等
+
 ## TODO
 
 - userev的npm发布
-- 支持编译AMD体系的脚本（或托管给r.js？）
-- 解决css、js、图片的文件名不能包含中横线 `-` 的问题
+- 支持编译AMD体系的脚本（或结合使用给r.js）
+- 支持css、js、图片的文件名包含中横线 `-`（与目前使用的filerev插件不兼容）
+- 在开启“替换CDN链接”后，支持css、js、图片的链接后面带问号和参数，如 `xxx.js?t=20150101`（与目前使用的cdner插件不兼容）
 - 支持被压缩的js和css的相互引用
-- 按某个特定注释标记，删除标记之间的代码
 
 ## License
 

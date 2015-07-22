@@ -1,6 +1,5 @@
 /*!
  * author:jieyou
- * contacts:baidu hi->youyo1122
  * see https://github.com/jieyou/peon
  */
 
@@ -19,12 +18,29 @@ module.exports = function(grunt){
         demoProjectC:'http://7xjwxy.com2.z0.glb.qiniucdn.com/peon/demoProjectC/'
     }
 
+    // 配置是否记录md5重命名的log
+    var md5RenameMap = false
+
+    // 配置删除debug代码相应标记
+    var deleteDebugCodeMark = {
+        start:'peon delete start',
+        end:'peon delete end'
+    }
+
+    var deleteDebugCodeReg = {
+        html:new RegExp('<\\!-- '+deleteDebugCodeMark.start+' -->(.|\\s)*?<\\!-- '+deleteDebugCodeMark.end+' -->', 'g'),
+        css:new RegExp('/\\* ' + deleteDebugCodeMark.start + ' \\*/(.|\\s)*?/\\* ' + deleteDebugCodeMark.end + ' \\*/', 'g'),
+        js:new RegExp('/\\* ' + deleteDebugCodeMark.start + ' \\*/(.|\\s)*?/\\* ' + deleteDebugCodeMark.end + ' \\*/', 'g') // todo: 支持js “//” 的注释
+    }
+
     var t = grunt.template.date(new Date(),'yyyy-mm-dd_HH-MM-ss'),
         banner = '/*! built by `peon` (https://github.com/jieyou/peon) */'
 
     var initConfigObj = {
         pkg: grunt.file.readJSON('package.json'),
         clean:{},
+        copy:{},
+        replace:{},
         uglify:{
             options:{
                 banner:banner+'\n',
@@ -37,7 +53,6 @@ module.exports = function(grunt){
                 // ,keepSpecialComments:'*' // （默认即为）保留代码中 “!” 开头的注释，如 /*! */之间的
             }
         },
-        copy:{},
         imagemin:{},
         filerev: {
             options: {
@@ -61,8 +76,7 @@ module.exports = function(grunt){
                 prettyPrint:true
             }
         },
-        cdnify:{     
-        }
+        cdner:{}
     }
 
     var k,
@@ -70,7 +84,8 @@ module.exports = function(grunt){
         outputPath = '/dist',
         taskArr
 
-    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-clean')
+    grunt.loadNpmTasks('grunt-replace')
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-cssmin')
     grunt.loadNpmTasks('grunt-contrib-imagemin')
@@ -78,32 +93,12 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-filerev')
     grunt.loadNpmTasks('grunt-userev')
     grunt.loadNpmTasks('grunt-filerev-assets')
-    grunt.loadNpmTasks('grunt-cdnify')
+    grunt.loadNpmTasks('grunt-cdner')
 
     for(k in pathObj){
         if(pathObj.hasOwnProperty(k)){
             v = pathObj[k]
             initConfigObj.clean[k] = [v+outputPath],
-            initConfigObj.uglify[k] = {
-                files: [
-                    {
-                        expand:true,
-                        cwd: v+'/js',
-                        src: '*.js',
-                        dest: v+outputPath+'/js'
-                    }
-                ]
-            }
-            initConfigObj.cssmin[k] = {
-                files: [
-                    {
-                        expand:true,
-                        cwd: v+'/css',
-                        src: '*.css',
-                        dest: v+outputPath+'/css'
-                    }
-                ]
-            }
             initConfigObj.copy[k] = {
                 files:[
                     {
@@ -123,30 +118,106 @@ module.exports = function(grunt){
                         cwd: v+'/lib',
                         src: '**',
                         dest: v+outputPath+'/lib'
+                    },
+                    {
+                        expand:true,
+                        cwd: v+'/css',
+                        src: '*.css',
+                        dest: v+outputPath+'/css'
+                    },
+                    {
+                        expand:true,
+                        cwd: v+'/js',
+                        src: '*.js',
+                        dest: v+outputPath+'/js'
+                    },
+                    {
+                        expand:true,
+                        cwd: v+'/images',
+                        src: '*.{png,jpg,gif}',
+                        dest: v+outputPath+'/images'
+                    }                    
+                ]
+            }
+            initConfigObj.replace[k + '___html___'] = {
+                options: {
+                    patterns: [
+                        {
+                            match: deleteDebugCodeReg.html,
+                            replacement: ''
+                        }
+                    ]
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: v + outputPath + '/',
+                        src: '*.html',
+                        dest: v + outputPath + '/'
                     }
-                    // 图片可能没有必要保留未压缩版本，将imagemin后的覆盖原文件
-                    // ,
-                    // {
-                    //     expand:true,
-                    //     cwd: v+outputPath+'/images',
-                    //     src: '*.{png,jpg,gif}',
-                    //     dest: v+'/images'
-                    // }
-                    // windows机器上imagemin有问题，移除，只是将图片拷贝到output
-                    // ,
-                    // {
-                    //     expand:true,
-                    //     cwd: v+'/images',
-                    //     src: '*.{png,jpg,gif}',
-                    //     dest: v+outputPath+'/images'
-                    // }
+                ]
+            }
+            initConfigObj.replace[k + '___js___'] = {
+                options: {
+                    patterns: [
+                        {
+                            match: deleteDebugCodeReg.js,
+                            replacement: ''
+                        }
+                    ]
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: v + outputPath + '/js',
+                        src: '*.js',
+                        dest: v + outputPath + '/js'
+                    }
+                ]
+            }
+            initConfigObj.replace[k+'___css___'] = {
+                options: {
+                    patterns: [
+                        {
+                            match: deleteDebugCodeReg.css,
+                            replacement: ''
+                        }
+                    ]
+                },
+                files: [
+                    {
+                        expand:true,
+                        cwd: v + outputPath + '/css',
+                        src: '*.css',
+                        dest: v + outputPath + '/css'
+                    }
+                ]
+            }
+            initConfigObj.uglify[k] = {
+                files: [
+                    {
+                        expand:true,
+                        cwd: v+outputPath+'/js',
+                        src: '*.js',
+                        dest: v+outputPath+'/js'
+                    }
+                ]
+            }
+            initConfigObj.cssmin[k] = {
+                files: [
+                    {
+                        expand:true,
+                        cwd: v+outputPath+'/css',
+                        src: '*.css',
+                        dest: v+outputPath+'/css'
+                    }
                 ]
             }
             initConfigObj.imagemin[k] = {
                 files:[
                     {
                         expand:true,
-                        cwd: v+'/images',
+                        cwd: v+outputPath+'/images',
                         src: '*.{png,jpg,gif}',
                         dest: v+outputPath+'/images'
                     }
@@ -164,11 +235,14 @@ module.exports = function(grunt){
             initConfigObj.userev[k+'___images___'] = {
                 src: [v+outputPath+'/*.html',v+outputPath+'/css/*.css',v+outputPath+'/js/*.js']
             }
-            // 记录md5命名映射logo
-            initConfigObj.filerev_assets[k+'___images___'] = {
-                options:{
-                    cwd:v+outputPath,
-                    dest:v+'/peon_md5_map/'+t+'___images___.json'
+
+            if(md5RenameMap){
+                // 记录md5命名映射log
+                initConfigObj.filerev_assets[k+'___images___'] = {
+                    options:{
+                        cwd:v+outputPath,
+                        dest:v+'/peon_md5_map/'+t+'___images___.json'
+                    }
                 }
             }
             // md5重命名所有js\css
@@ -179,26 +253,32 @@ module.exports = function(grunt){
             initConfigObj.userev[k+'___js_css___'] = {
                 src: [v+outputPath+'/*.html']
             }
-            // 记录md5命名映射logo
-            initConfigObj.filerev_assets[k+'___js_css___'] = {
-                options:{
-                    cwd:v+outputPath,
-                    dest:v+'/peon_md5_map/'+t+'___js_css___.json'
+
+            if(md5RenameMap){
+                // 记录md5命名映射log
+                initConfigObj.filerev_assets[k+'___js_css___'] = {
+                    options:{
+                        cwd:v+outputPath,
+                        dest:v+'/peon_md5_map/'+t+'___js_css___.json'
+                    }
                 }
             }
 
             if(cdnPrefixObj.hasOwnProperty(k)){
-                initConfigObj.cdnify[k] = {
+                initConfigObj.cdner[k] = {
                     options:{
-                        rewriter:function (url) {
-                            // 示例中，分别为data:image、锚点、http(s)//、//开头的链接不修改
-                            if (url.indexOf('data:') === 0 || /^\#?\{.*\}$/.test(url) || /^(https?\:)?\/\//i.test(url)){ // 无需修改为CDN地址的，以后可能还要添加，或者根据某个具体项目修改
-                                return url
+                        // rewriter:function (url) {
+                        //     // 示例中，分别为data:image、锚点、http(s)//、//开头的链接不修改
+                        //     if (url.indexOf('data:') === 0 || /^\#?\{.*\}$/.test(url) || /^(https?\:)?\/\//i.test(url)){ // 无需修改为CDN地址的，以后可能还要添加，或者根据某个具体项目修改
+                        //         return url
                             
-                            }else{
-                                return cdnPrefixObj[k] + url
-                            }
-                        }
+                        //     }else{
+                        //         return cdnPrefixObj[k] + url
+                        //     }
+                        // }
+                        cdn:cdnPrefixObj[k],
+                        root:v+outputPath
+                        
                     },
                     files:[
                         {
@@ -212,21 +292,32 @@ module.exports = function(grunt){
             }
 
             taskArr = [
-                'clean:'+k,
-                'uglify:'+k,
-                'cssmin:'+k,
-                'imagemin:'+k,
-                'copy:'+k,
-                'filerev:'+k+'___images___',
-                'userev:'+k+'___images___',
-                'filerev_assets:'+k+'___images___',
-                'filerev:'+k+'___js_css___',
-                'userev:'+k+'___js_css___',
-                'filerev_assets:'+k+'___js_css___'
+                'clean:'+k,                         // 0
+                'copy:'+k,                          // 1  
+                'replace:'+k+'___html___',          // 2
+                'replace:'+k+'___js___',            // 3
+                'replace:'+k+'___css___',           // 4
+                'uglify:'+k,                        // 5
+                'cssmin:'+k,                        // 6
+                'imagemin:'+k,                      // 7
+                'filerev:'+k+'___images___',        // 8
+                'userev:'+k+'___images___',         // 9
+                // 'filerev_assets:'+k+'___images___', // d
+                'filerev:'+k+'___js_css___',        // 10
+                'userev:'+k+'___js_css___'          // 11
+                // 'filerev_assets:'+k+'___js_css___',  // d
+                // 'cdner:'+k                           // d
             ]
 
+            if(md5RenameMap){
+                taskArr.splice(10,0,'filerev_assets:'+k+'___images___')
+                taskArr.splice(13,0,'filerev_assets:'+k+'___js_css___')
+            }
+
             if(cdnPrefixObj.hasOwnProperty(k)){
-                taskArr.splice(10,0,'cdnify:'+k)
+                taskArr.splice(
+                    (md5RenameMap?14:12)
+                    ,0,'cdner:'+k)
             }
 
             grunt.registerTask(k,taskArr)

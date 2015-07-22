@@ -7,6 +7,11 @@
  *
  */
 
+/* peon delete start */
+body{
+    /*我是调试信息，使用peon编译后将自动删除*/
+}
+/* peon delete end */
 
 body {
     background: #f8f8f8;
