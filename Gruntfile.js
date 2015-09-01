@@ -5,18 +5,11 @@
 
 module.exports = function(grunt){
 
-    // 配置项目的路径
-    var pathObj = {
-        demoProjectA:'demoProjectA',
-        demoProjectB:'demoProjectB/mobile',
-        demoProjectC:'demoProjectC'
-    }
+    // 配置cdn前缀
+    var cdnPrefix = 'http://cdn.example.cn/'
 
-    // 配置项目需要替换的静态文件的cdn地址前缀，如果无需替换，则没有对应字段
-    // 示例中，只有demoProjectC项目需要替换
-    var cdnPrefixObj = {
-        demoProjectC:'http://7xjwxy.com2.z0.glb.qiniucdn.com/peon/demoProjectC/'
-    }
+    // 配置构造cdn路径时，需要被忽略的路径前缀
+    var ignoreCdnPathPrefix = ''
 
     // 配置是否记录md5重命名的log
     var md5RenameMap = false
@@ -26,6 +19,30 @@ module.exports = function(grunt){
         start:'peon delete start',
         end:'peon delete end'
     }
+
+    var pathObj = {}
+    var cdnPrefixObj = {}
+    process.argv.forEach(function(key, i) {
+        if (i <= 1) return true
+        var isOption = false
+        grunt.option.flags().forEach(function(obj) {
+            if (obj.indexOf(key) == 0) {
+                isOption = true
+                return false
+            }
+        })
+        if (!isOption) {
+            pathObj[key] = key
+            grunt.log.write("Creating user-specified task: " + pathObj[key] + "...").ok()
+            // cdn配置代码
+            // var cdnPath = key
+            // if (key.indexOf(ignoreCdnPathPrefix) == 0) {
+            //     cdnPath = key.substr(ignoreCdnPathPrefix.length)
+            // }
+            // cdnPrefixObj[key] = cdnPrefix + cdnPath
+            // grunt.log.write("Creating CDN path: " + cdnPrefixObj[key] + "...").ok()
+        }
+    })
 
     var deleteDebugCodeReg = {
         html:new RegExp('<\\!-- '+deleteDebugCodeMark.start+' -->(.|\\s)*?<\\!-- '+deleteDebugCodeMark.end+' -->', 'g'),
