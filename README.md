@@ -70,17 +70,7 @@ started](http://gruntjs.com/getting-started)
 
 ### 在 `Gruntfile.js` 中添加项目
 
-打开 `Gruntfile.js` 在最顶部的 `pathObj`
-对象中，加上你的项目名（key）和路径（value），添加完以后的例子：
-
-    var pathObj = {
-        demoProjectA:'demoProjectA',
-        demoProjectB:'demoProjectB/mobile',
-        demoProjectC:'demoProjectC',
-        myProject:'myProject'
-    }
-
-你也可以直接修改demoProjectA或demoProjectB所在行
+`Gruntfile.js`支持根据命令行自动加入项目。此处无需人工干预。
 
 ### 运行
 
@@ -92,9 +82,12 @@ started](http://gruntjs.com/getting-started)
 ### 将静态文件地址替换为CDN链接（给地址添加前缀）
 
 在 `Gruntfile.js`
-中添加项目时，如果该项目需要将静态文件置于一个特殊的CDN服务器（即需要为修改代码中的静态文件增加一个域名前缀），则需要在配置
-`pathObj` 中的字段的同时，配置 `cdnPrefixObj` ，字段名与 `pathObj`
-中的相同，值为对应需要为静态文件添加的前缀
+中添加项目时，如果该项目需要将静态文件置于一个特殊的CDN服务器（即需要为修改代码中的静态文件增加一个域名前缀），则搜索
+`cdn配置代码`，然后打开注释并修改相关代码。cdn的域名前缀为cdnPrefix。默认为在配置`pathObj` 中的字段的同时，配置 
+`cdnPrefixObj` ，字段名与 `pathObj`中的相同，值为对应需要为静态文件添加的前缀
+
+有的时候需要忽略一部分pathObj中的路径。比如pathObj为git/example_dir，但是只希望用example_dir配置cdn路径，
+于是配置ignoreCdnPathPrefix为`git/`
 
     var cdnPrefixObj = {
         demoProjectC:'http://7xjwxy.com2.z0.glb.qiniucdn.com/peon/demoProjectC/', // 这是我的示例，请无视具体地址
