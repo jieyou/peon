@@ -9,7 +9,7 @@
 
 -   静态代码（js\\css）压缩
 -   图片（gif\\png\\jpg）压缩
--   文件重命名：对静态代码图片用md5求和，然后截取一定位数，写入到文件名中
+-   文件版本管理：对静态代码图片用md5求和，然后截取一定位数，写入到文件名中，这样不同版本的文件将拥有不同的文件名
 -   在html、js、css中对上述文件的引用，替换为上一步重命名后的引用
 -   将静态文件地址替换为CDN链接（添加前缀）
 -   删除某些无需上线的代码行
@@ -43,7 +43,7 @@ started](http://gruntjs.com/getting-started)
 
 ### 运行测试
 
-- `grunt demoProjectA` 或 `grunt demoProjectB` 或 `grunt demoProjectC`
+- `grunt demoProjectA` 或 `grunt demoProjectB/mobile` 或 `grunt demoProjectC`
 ，然后进入你输入的相应的demoProject 查看和通过本地服务器访问 `dist/`
 - 路径下的全部文件。即可测试编译demoProjectA或demoProjectB或demoProjectC内的代码，用来测试是否已经OK
 - *（测试文件是从互联网上的素材网站下载和修改的，如果侵犯了作者权利请联系，会立即删除）*
@@ -58,7 +58,7 @@ started](http://gruntjs.com/getting-started)
 
 ### 按要求放置项目文件
 
-进入 `myProject/` 按照demoProjectA的路径，开发你的项目，要求：
+进入你的项目的文件夹，如 `myProject/` ，按照demoProjectA的路径，开发你的项目，要求：
 
 -   将*需要压缩*css文件置于 `css/` 文件夹下
 -   将*需要压缩*的js文件置于 `js/` 文件夹下
@@ -68,34 +68,23 @@ started](http://gruntjs.com/getting-started)
 -   在目前，还需要确保需要压缩的css、js、图片的文件名中不包含中横线 `-`
 -   在目前，还需要确保需要压缩的css和js之间没有相互引用
 
-### 在 `Gruntfile.js` 中添加项目
+### 运行编译
 
-`Gruntfile.js`支持根据命令行自动加入项目。此处无需人工干预。
-
-### 运行
-
-- 运行， `grunt myProject`
+- 运行 `grunt (+项目根目录相对路径)`，如 `grunt myProject`
 - 会将全部处理后的文件置于 “ `dist/` ”的路径下
 
 ## 高级功能
 
 ### 将静态文件地址替换为CDN链接（给地址添加前缀）
 
-在 `Gruntfile.js`
-中添加项目时，如果该项目需要将静态文件置于一个特殊的CDN服务器（即需要为修改代码中的静态文件增加一个域名前缀），则搜索
-`cdn配置代码`，然后打开注释并修改相关代码。cdn的域名前缀为`cdnPrefix`。默认为在配置`pathObj` 中的字段的同时，配置 
-`cdnPrefixObj` ，字段名与 `pathObj`中的相同，值为对应需要为静态文件添加的前缀
+在 `Gruntfile.js`中添加项目时，如果该项目需要将静态文件置于一个特殊的CDN服务器（即需要为修改代码中的静态文件增加一个域名前缀），则需要修改配置项`cdnPrefix`，此时被添加的cdn路径为`cdnPrefix + path`
 
-有的时候需要忽略一部分`pathObj`中的路径。比如`pathObj`为`git/example_dir`，但是只希望用`example_dir`配置cdn路径，
-于是配置`ignoreCdnPathPrefix`为`git/`
+有时候需要忽略`path`中的一部分路径。比如`path`为`h5/share`，但是只希望用`http://example.cdn.com/share`作为cdn路径的前缀，此时只需配置`ignoreCdnPathPrefix`为`h5/`即可
 
-    var cdnPrefixObj = {
-        demoProjectC:'http://7xjwxy.com2.z0.glb.qiniucdn.com/peon/demoProjectC/', // 这是我的示例，请无视具体地址
-        myProject:'http://cdn.example.com/myProject/' // 请注意最后的“/”
-    }
+一般来说，并不是所有的静态文件都需要添加前缀，比如：
 
-一般来说，并不是所有的静态文件都需要添加前缀（比如 `data:url`
-或绝对地址），在具体项目中，你可能需要更改不用添加前缀的静态文件的过滤器，那么请搜索 `rewriter:function` ，然后修改相关代码
+- `data:url`
+- 绝对地址
 
 ### 删除无需上线的代码行（如调试代码）
 
@@ -112,18 +101,13 @@ started](http://gruntjs.com/getting-started)
 
 里面看到示例。目前还没法支持在js中的`// peon delete start `这种写法，必须使用`/*`
 
+当然你也可以通过修改配置项来更改他们
+
 ### 输出md5重命名前后的映射关系
 
-- 将Gruntfile.js顶部的`var md5RenameMap = false`改为`true`即可开启
+- 将Gruntfile.js顶部的配置项`md5RenameMap`置为`true`即可开启
 - md5改名前后的文件名关系映射，将生成并放在 `peon_md5_map/` 路径下，每次生成images的、css和js的各一个json文件，便于排查问题、增量上线等
 
-## TODO
-
-- userev的npm发布
-- 支持编译AMD体系的脚本（或结合使用给r.js）
-- 支持css、js、图片的文件名包含中横线 `-`（与目前使用的filerev插件不兼容）
-- 在开启“替换CDN链接”后，支持css、js、图片的链接后面带问号和参数，如 `xxx.js?t=20150101`（与目前使用的cdner插件不兼容）
-- 支持被压缩的js和css的相互引用
 
 ## License
 
