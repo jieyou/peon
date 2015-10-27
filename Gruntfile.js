@@ -320,7 +320,6 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-filerev-assets')
     grunt.loadNpmTasks('grunt-cdner')
 
-    console.log(path,taskArr)
     grunt.registerTask(path,taskArr)
 
     grunt.initConfig(initConfigObj)
