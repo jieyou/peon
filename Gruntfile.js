@@ -30,7 +30,15 @@ module.exports = function(grunt){
     // 配置项完毕
 
     var path = process.argv[2]
-    if(!path){
+    var removeLastSlashPath
+    if(path){
+        // 去掉最后一个 `/`
+        if(path[path.length-1] == '/'){
+            removeLastSlashPath = path.substr(0,path.length-1)
+        }else{
+            removeLastSlashPath = path
+        }
+    }else{
         grunt.fail.warn('请将项目路径由参数带过来')
         return
     }
@@ -94,39 +102,39 @@ module.exports = function(grunt){
         files:[
             {
                 expand:true,
-                cwd: path , 
+                cwd: removeLastSlashPath , 
                 src: '*.html',
-                dest: path + outputPath+'/'
+                dest: removeLastSlashPath + outputPath+'/'
             },
             {
                 expand:true,
-                cwd: path + '/others',
+                cwd: removeLastSlashPath + '/others',
                 src: '**',
-                dest: path + outputPath+'/others'
+                dest: removeLastSlashPath + outputPath+'/others'
             },
             {
                 expand:true,
-                cwd: path + '/lib',
+                cwd: removeLastSlashPath + '/lib',
                 src: '**',
-                dest: path + outputPath+'/lib'
+                dest: removeLastSlashPath + outputPath+'/lib'
             },
             {
                 expand:true,
-                cwd: path + '/css',
+                cwd: removeLastSlashPath + '/css',
                 src: '*.css',
-                dest: path + outputPath+'/css'
+                dest: removeLastSlashPath + outputPath+'/css'
             },
             {
                 expand:true,
-                cwd: path + '/js',
+                cwd: removeLastSlashPath + '/js',
                 src: '*.js',
-                dest: path + outputPath+'/js'
+                dest: removeLastSlashPath + outputPath+'/js'
             },
             {
                 expand:true,
-                cwd: path + '/images',
+                cwd: removeLastSlashPath + '/images',
                 src: '*.{png,jpg,gif}',
-                dest: path + outputPath+'/images'
+                dest: removeLastSlashPath + outputPath+'/images'
             }                    
         ]
     }
@@ -142,9 +150,9 @@ module.exports = function(grunt){
         files: [
             {
                 expand: true,
-                cwd: path   + outputPath + '/',
+                cwd: removeLastSlashPath   + outputPath + '/',
                 src: '*.html',
-                dest: path   + outputPath + '/'
+                dest: removeLastSlashPath   + outputPath + '/'
             }
         ]
     }
@@ -160,9 +168,9 @@ module.exports = function(grunt){
         files: [
             {
                 expand: true,
-                cwd: path   + outputPath + '/js',
+                cwd: removeLastSlashPath + outputPath + '/js',
                 src: '*.js',
-                dest: path   + outputPath + '/js'
+                dest: removeLastSlashPath + outputPath + '/js'
             }
         ]
     }
@@ -178,9 +186,9 @@ module.exports = function(grunt){
         files: [
             {
                 expand:true,
-                cwd: path   + outputPath + '/css',
+                cwd: removeLastSlashPath + outputPath + '/css',
                 src: '*.css',
-                dest: path   + outputPath + '/css'
+                dest: removeLastSlashPath + outputPath + '/css'
             }
         ]
     }
@@ -188,9 +196,9 @@ module.exports = function(grunt){
         files: [
             {
                 expand:true,
-                cwd: path + outputPath+'/js',
+                cwd: removeLastSlashPath + outputPath+'/js',
                 src: '*.js',
-                dest: path + outputPath+'/js'
+                dest: removeLastSlashPath + outputPath+'/js'
             }
         ]
     }
@@ -198,9 +206,9 @@ module.exports = function(grunt){
         files: [
             {
                 expand:true,
-                cwd: path + outputPath+'/css',
+                cwd: removeLastSlashPath + outputPath+'/css',
                 src: '*.css',
-                dest: path + outputPath+'/css'
+                dest: removeLastSlashPath + outputPath+'/css'
             }
         ]
     }
@@ -208,49 +216,49 @@ module.exports = function(grunt){
         files:[
             {
                 expand:true,
-                cwd: path + outputPath+'/images',
+                cwd: removeLastSlashPath + outputPath+'/images',
                 src: '*.{png,jpg,gif}',
-                dest: path + outputPath+'/images'
+                dest: removeLastSlashPath + outputPath+'/images'
             }
         ]
     }
 
     // md5重命名所有图片
     initConfigObj.filerev[path+'___images___'] = {
-        src: [path + outputPath+'/images/*.{png,jpg,gif}']
+        src: [removeLastSlashPath + outputPath+'/images/*.{png,jpg,gif}']
     }
     // k3karthic的代码可以解决原始代码中的问题
     // see https://github.com/salsita/grunt-userev/pull/7
     // see https://github.com/k3karthic/grunt-userev/blob/multiple_assets/tasks/userev.js
     // 修改css\js\html内的图片引用
     initConfigObj.userev[path+'___images___'] = {
-        src: [path + outputPath+'/*.html',path + outputPath+'/css/*.css',path + outputPath+'/js/*.js']
+        src: [removeLastSlashPath + outputPath+'/*.html',removeLastSlashPath + outputPath+'/css/*.css',removeLastSlashPath + outputPath+'/js/*.js']
     }
 
     if(md5RenameMap){
         // 记录md5命名映射log
         initConfigObj.filerev_assets[path+'___images___'] = {
             options:{
-                cwd:path + outputPath,
-                dest:path + '/peon_md5_map/'+t+'___images___.json'
+                cwd:removeLastSlashPath + outputPath,
+                dest:removeLastSlashPath + '/peon_md5_map/'+t+'___images___.json'
             }
         }
     }
     // md5重命名所有js\css
     initConfigObj.filerev[path+'___js_css___'] = {
-        src: [path + outputPath+'/css/*.css',path + outputPath+'/js/*.js']
+        src: [removeLastSlashPath + outputPath+'/css/*.css',removeLastSlashPath + outputPath+'/js/*.js']
     }
     // 修改html内的js\css引用（WIN）修改html内的js\css\图片[多做一次但是无所谓]引用（MAC）
     initConfigObj.userev[path+'___js_css___'] = {
-        src: [path + outputPath+'/*.html']
+        src: [removeLastSlashPath + outputPath+'/*.html']
     }
 
     if(md5RenameMap){
         // 记录md5命名映射log
         initConfigObj.filerev_assets[path+'___js_css___'] = {
             options:{
-                cwd:path + outputPath,
-                dest:path + '/peon_md5_map/'+t+'___js_css___.json'
+                cwd:removeLastSlashPath + outputPath,
+                dest:removeLastSlashPath + '/peon_md5_map/'+t+'___js_css___.json'
             }
         }
     }
@@ -258,15 +266,15 @@ module.exports = function(grunt){
     if(cdnPrefix){
         initConfigObj.cdner[path] = {
             options:{
-                cdn:cdnPrefix + (deletePathPrefixForCdnPrefix ? path.replace(deletePathPrefixForCdnPrefix,'') : ''),
-                root:path + outputPath
+                cdn:cdnPrefix + (deletePathPrefixForCdnPrefix ? removeLastSlashPath.replace(deletePathPrefixForCdnPrefix,'') : ''),
+                root:removeLastSlashPath + outputPath
             },
             files:[
                 {
                     expand:true,
-                    cwd: path + outputPath,
+                    cwd: removeLastSlashPath + outputPath,
                     src: ['css/*.css','js/*.js','*.html']//,'images/*.{png,jpg,gif}','others/*']
-                    ,dest:path + outputPath
+                    ,dest:removeLastSlashPath + outputPath
                 }
             ]
         }
@@ -312,6 +320,7 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-filerev-assets')
     grunt.loadNpmTasks('grunt-cdner')
 
+    console.log(path,taskArr)
     grunt.registerTask(path,taskArr)
 
     grunt.initConfig(initConfigObj)
