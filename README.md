@@ -29,21 +29,23 @@ started](http://gruntjs.com/getting-started)
 
 ### 下载代码
 
-点击右边“Download zip”按钮或 [此处](../../archive/master.zip) 下载代码
+* 点击右边`Download zip`按钮或 [此处](../../archive/master.zip) 下载代码
+* 或者使用`git clone`来客隆仓库
 
 ### 安装依赖
 
 - 将下载得到的代码，解压后拷贝到你项目所在路径上一层（如，你的项目根路径是
-`~\Sites\aProject\` ，则解压到 `~\Sites\` ），运行 `npm i`
+`~/Sites/aProject/` ，则解压到 `~/Sites/` ），运行 `npm i` （或`npm run install`）
 - *(如果遇到错误，请尝试运行 `npm cache clear` ，然后再次运行 `npm i`)*
 
 ### 替换代码
 
-用解压得到的代码根目录下的 `userev.js` 替换 `node_modules/grunt-userev/tasks` 下的同名文件
+* 运行 `npm run cpuserev`
+* 或手动进行：用解压得到的代码根目录下的 `userev.js` 替换 `node_modules/grunt-userev/tasks` 下的同名文件
 
 ### 运行测试
 
-- `grunt demoProjectA` 或 `grunt demoProjectB/mobile` 或 `grunt demoProjectC`
+- `grunt demoProjectA`（或`npm run testa`） 或 `grunt demoProjectB/mobile`（或`npm run testb`） 或 `grunt demoProjectC`（或`npm run testc`）
 ，然后进入你输入的相应的demoProject 查看和通过本地服务器访问 `dist/`
 - 路径下的全部文件。即可测试编译demoProjectA或demoProjectB或demoProjectC内的代码，用来测试是否已经OK
 - *（测试文件是从互联网上的素材网站下载和修改的，如果侵犯了作者权利请联系，会立即删除）*
